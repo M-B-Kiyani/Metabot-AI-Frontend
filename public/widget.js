@@ -49,17 +49,16 @@
     }
 
     .metabot-chat-icon {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       fill: white;
       transition: transform 0.3s ease;
     }
 
     .metabot-close-icon {
-      width: 20px;
-      height: 20px;
-      fill: white;
-      transform: rotate(45deg);
+      width: 24px;
+      height: 24px;
+      stroke: white;
       transition: transform 0.3s ease;
     }
 
@@ -212,8 +211,8 @@
   const chatButton = document.createElement("button");
   chatButton.className = "metabot-chat-button";
   chatButton.innerHTML = `
-    <svg class="metabot-chat-icon" viewBox="0 0 24 24">
-      <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+    <svg class="metabot-chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
     </svg>
   `;
 
@@ -282,8 +281,8 @@
     if (isOpen) {
       chatContainer.classList.add("open");
       chatButton.innerHTML = `
-        <svg class="metabot-close-icon" viewBox="0 0 24 24">
-          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        <svg class="metabot-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       `;
       // Hide notification dot when chat is opened
@@ -291,8 +290,8 @@
     } else {
       chatContainer.classList.remove("open");
       chatButton.innerHTML = `
-        <svg class="metabot-chat-icon" viewBox="0 0 24 24">
-          <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+        <svg class="metabot-chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
         </svg>
       `;
     }
