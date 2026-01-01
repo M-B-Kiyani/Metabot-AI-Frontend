@@ -10,6 +10,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Custom scrollbar */
 #metalogics-chatbot-widget ::-webkit-scrollbar {
   width: 6px;
@@ -117,6 +130,11 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.metalogics-icon-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
 .metalogics-messages-container {
   flex: 1;
   overflow-y: auto;
@@ -190,6 +208,11 @@
   transform: scale(1.05);
 }
 
+.metalogics-voice-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
 .metalogics-voice-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -227,6 +250,11 @@
   transform: scale(1.05);
 }
 
+.metalogics-send-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
 .metalogics-send-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -254,5 +282,42 @@
 
   .metalogics-chat-button {
     bottom: 16px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .metalogics-chat-button:focus,
+  .metalogics-icon-button:focus,
+  .metalogics-voice-button:focus,
+  .metalogics-send-button:focus {
+    outline: 3px solid;
+  }
+
+  .metalogics-text-input:focus {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .metalogics-chat-button,
+  .metalogics-voice-button,
+  .metalogics-send-button {
+    transition: none;
+  }
+
+  .metalogics-chat-button:hover,
+  .metalogics-voice-button:hover:not(:disabled),
+  .metalogics-send-button:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .metalogics-voice-active {
+    animation: none;
+  }
+
+  #metalogics-chatbot-widget > div {
+    animation: none;
   }
 }

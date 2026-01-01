@@ -25,6 +25,8 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const retellClientRef = useRef<any>(null);
   const retellLoadedRef = useRef(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const brandColor = config.brandColor || "#3b82f6";
   const hasRetell = config.retellApiKey && config.retellAgentId;
@@ -60,6 +62,30 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
         chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Focus management when opening/closing
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      // Focus the input when chat opens
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [isOpen]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (isOpen && event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
 
   // Initialize Retell
   useEffect(() => {
@@ -301,6 +327,7 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -312,7 +339,7 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
         </button>
       )}
 
-      {/* Chat Window */}
+      {/* Chat Window - NEVER use aria-hidden on this container */}
       {isOpen && (
         <div
           id="metalogics-chat-widget"
@@ -336,6 +363,7 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                   style={{ color: brandColor }}
                   fill="currentColor"
                   viewBox="0 0 20 20"
+                  aria-hidden="true"
                 >
                   <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
                   <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
@@ -345,7 +373,7 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                 <h3 id="metalogics-chat-title" className="font-bold text-lg">
                   Metalogics Assistant
                 </h3>
-                <p className="text-xs opacity-90">
+                <p className="text-xs opacity-90" aria-live="polite">
                   {isVoiceActive ? voiceStatus : "Online"}
                 </p>
               </div>
@@ -355,7 +383,7 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                 type="button"
                 onClick={handleClearChat}
                 className="metalogics-icon-button"
-                aria-label="Clear chat"
+                aria-label="Clear chat history"
                 title="Clear chat history"
               >
                 <svg
@@ -363,6 +391,7 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -373,16 +402,18 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                 </svg>
               </button>
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={() => setIsOpen(false)}
                 className="metalogics-icon-button metalogics-minimize-btn"
-                aria-label="Close chat"
+                aria-label="Close chat window"
               >
                 <svg
                   className="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -396,7 +427,13 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
           </div>
 
           {/* Messages */}
-          <div ref={chatContainerRef} className="metalogics-messages-container">
+          <div
+            ref={chatContainerRef}
+            className="metalogics-messages-container"
+            role="log"
+            aria-label="Chat messages"
+            aria-live="polite"
+          >
             {messages.map((msg, index) => (
               <div
                 key={`${msg.timestamp}-${index}`}
@@ -415,6 +452,10 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                       ? { backgroundColor: brandColor }
                       : {}
                   }
+                  role={msg.role === Role.USER ? "user" : "assistant"}
+                  aria-label={`${
+                    msg.role === Role.USER ? "You" : "Assistant"
+                  }: ${msg.text}`}
                 >
                   <p className="text-sm whitespace-pre-wrap break-words">
                     {msg.text}
@@ -426,6 +467,7 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
               <div className="flex justify-start">
                 <div className="metalogics-message metalogics-message-assistant">
                   <Loader color={brandColor} />
+                  <span className="sr-only">Assistant is typing...</span>
                 </div>
               </div>
             )}
@@ -440,13 +482,19 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
               }}
               className="flex items-center space-x-2"
             >
+              <label htmlFor="metalogics-message-input" className="sr-only">
+                Type your message
+              </label>
               <input
+                ref={inputRef}
+                id="metalogics-message-input"
                 type="text"
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 placeholder="Type your message..."
                 className="metalogics-text-input"
                 disabled={isLoading || isVoiceActive}
+                aria-describedby={isVoiceActive ? "voice-status" : undefined}
               />
 
               {/* Voice Button */}
@@ -463,14 +511,18 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                       ? { backgroundColor: "#ef4444" }
                       : { backgroundColor: brandColor }
                   }
-                  aria-label={isVoiceActive ? "Stop voice" : "Start voice"}
-                  title={isVoiceActive ? "Stop voice" : "Start voice"}
+                  aria-label={
+                    isVoiceActive ? "Stop voice chat" : "Start voice chat"
+                  }
+                  aria-pressed={isVoiceActive}
+                  title={isVoiceActive ? "Stop voice chat" : "Start voice chat"}
                 >
                   {isVoiceActive ? (
                     <svg
                       className="w-5 h-5"
                       fill="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path d="M6 6h12v12H6z" />
                     </svg>
@@ -480,6 +532,7 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -505,6 +558,7 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -515,6 +569,13 @@ const UnifiedChatWidget: React.FC<UnifiedChatWidgetProps> = ({ config }) => {
                 </svg>
               </button>
             </form>
+
+            {/* Voice status for screen readers */}
+            {isVoiceActive && (
+              <div id="voice-status" className="sr-only" aria-live="polite">
+                Voice chat is active. Status: {voiceStatus}
+              </div>
+            )}
           </div>
 
           {/* Branding */}
