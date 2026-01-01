@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaBot Widget Integration Examples</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .example-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .example-card h3 {
+            margin-top: 0;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .integration-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 40px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+            font-weight: bold;
+        }
+        
+        .cta-section {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin: 10px;
+        }
+        
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 MetaBot Widget</h1>
+            <p>Professional AI chatbot widget that integrates seamlessly into any website. No iframes, no external dependencies - just pure performance.</p>
+        </div>
+
+        <div class="integration-section">
+            <h2>🚀 Quick Integration</h2>
+            <p>Add our AI chatbot to your website with just one line of code:</p>
+            
+            <div class="code-block">
+                <pre>&lt;script src="https://metabot-ai-frontend-production.up.railway.app/metabot-widget-standalone.js"&gt;&lt;/script&gt;</pre>
+            </div>
+            
+            <p>That's it! The widget will automatically appear on your website with full functionality.</p>
+        </div>
+
+        <div class="examples-grid">
+            <div class="example-card">
+                <h3>📋 Basic Integration</h3>
+                <p>Simple drop-in solution for any website:</p>
+                <div class="code-block">
+                    <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to my site&lt;/h1&gt;
+    
+    &lt;!-- MetaBot Widget --&gt;
+    &lt;script src="https://metabot-ai-frontend-production.up.railway.app/metabot-widget-standalone.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h3>⚙️ Custom Configuration</h3>
+                <p>Configure the widget with custom settings:</p>
+                <div class="code-block">
+                    <pre>&lt;script&gt;
+window.METABOT_CONFIG = {
+    apiBaseUrl: 'https://your-api.com',
+    position: 'bottom-left',
+    theme: 'dark',
+    autoOpen: false,
+    showNotifications: true
+};
+&lt;/script&gt;
+&lt;script src="https://metabot-ai-frontend-production.up.railway.app/metabot-widget-standalone.js"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h3>🎮 Programmatic Control</h3>
+                <p>Control the widget with JavaScript:</p>
+                <div class="code-block">
+                    <pre>&lt;button onclick="Metabot.open()"&gt;Open Chat&lt;/button&gt;
+&lt;button onclick="Metabot.close()"&gt;Close Chat&lt;/button&gt;
+&lt;button onclick="Metabot.toggle()"&gt;Toggle Chat&lt;/button&gt;
+&lt;button onclick="Metabot.showNotification()"&gt;Show Notification&lt;/button&gt;
+
+&lt;script src="https://metabot-ai-frontend-production.up.railway.app/metabot-widget-standalone.js"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h3>📱 WordPress Integration</h3>
+                <p>Add to your WordPress theme:</p>
+                <div class="code-block">
+                    <pre>// Add to functions.php
+function add_metabot_widget() {
+    wp_enqueue_script(
+        'metabot-widget',
+        'https://metabot-ai-frontend-production.up.railway.app/metabot-widget-standalone.js',
+        array(),
+        '1.0.0',
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'add_metabot_widget');</pre>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h3>⚛️ React Integration</h3>
+                <p>Use with React applications:</p>
+                <div class="code-block">
+                    <pre>import { useEffect } from 'react';
+
+function App() {
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://metabot-ai-frontend-production.up.railway.app/metabot-widget-standalone.js';
+        script.async = true;
+        document.body.appendChild(script);
+        
+        return () => {
+            document.body.removeChild(script);
+            window.Metabot?.destroy();
+        };
+    }, []);
+
+    return &lt;div&gt;Your React App&lt;/div&gt;;
+}</pre>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h3>🛒 E-commerce Integration</h3>
+                <p>Perfect for online stores:</p>
+                <div class="code-block">
+                    <pre>&lt;script&gt;
+window.METABOT_CONFIG = {
+    autoOpen: true, // Open automatically for new visitors
+    showNotifications: true,
+    customMessages: {
+        welcome: "Hi! Need help finding something?"
+    }
+};
+&lt;/script&gt;
+&lt;script src="https://metabot-ai-frontend-production.up.railway.app/metabot-widget-standalone.js"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="integration-section">
+            <h2>✨ Key Features</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div>
+                    <h3>🎨 Modern Design</h3>
+                    <ul class="feature-list">
+                        <li>Glassmorphism UI with backdrop blur</li>
+                        <li>Smooth animations and transitions</li>
+                        <li>Mobile-responsive design</li>
+                        <li>Professional gradient styling</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>⚡ Performance</h3>
+                    <ul class="feature-list">
+                        <li>No iframe overhead</li>
+                        <li>Lightweight standalone bundle</li>
+                        <li>Fast loading and initialization</li>
+                        <li>Minimal DOM impact</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🔧 Integration</h3>
+                    <ul class="feature-list">
+                        <li>One-line installation</li>
+                        <li>Works with any website</li>
+                        <li>No external dependencies</li>
+                        <li>Programmatic API control</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🤖 AI Features</h3>
+                    <ul class="feature-list">
+                        <li>Intelligent conversation handling</li>
+                        <li>Booking system integration</li>
+                        <li>Voice chat capabilities</li>
+                        <li>Real-time responses</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Get Started?</h2>
+            <p>Add our AI chatbot to your website in seconds and start engaging with your visitors like never before.</p>
+            
+            <a href="#" class="cta-button" onclick="copyToClipboard()">📋 Copy Integration Code</a>
+            <a href="https://metabot-ai-frontend-production.up.railway.app" class="cta-button">🚀 View Demo</a>
+            <a href="mailto:contact@metalogics.io" class="cta-button">📧 Get Support</a>
+        </div>
+    </div>
+
+    <!-- MetaBot Widget Demo -->
+    <script>
+        window.METABOT_CONFIG = {
+            showNotifications: true,
+            autoOpen: false
+        };
+    </script>
+    <script src="./public/metabot-widget-standalone.js"></script>
+
+    <script>
+        function copyToClipboard() {
+            const code = '<script src="https://metabot-ai-frontend-production.up.railway.app/metabot-widget-standalone.js"></script>';
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Integration code copied to clipboard!');
+            });
+        }
+
+        // Show notification after 3 seconds
+        setTimeout(() => {
+            window.Metabot?.showNotification();
+        }, 3000);
+    </script>
+</body>
+</html>
