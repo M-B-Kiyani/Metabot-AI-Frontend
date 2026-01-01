@@ -1,5 +1,5 @@
 import React from "react";
-import Chatbot from "./Chatbot";
+import WidgetChatbot from "./WidgetChatbot";
 
 const WidgetApp: React.FC = () => {
   return (
@@ -46,7 +46,7 @@ const WidgetApp: React.FC = () => {
       {/* Chat Interface - Optimized for widget */}
       <main className="flex-grow flex flex-col bg-white/5 backdrop-blur-xl overflow-hidden relative z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
-        <Chatbot />
+        <WidgetChatbot />
       </main>
 
       <style jsx>{`
