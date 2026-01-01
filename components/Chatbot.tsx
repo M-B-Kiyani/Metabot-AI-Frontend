@@ -216,64 +216,153 @@ const Chatbot: React.FC = () => {
     <>
       <div
         ref={chatContainerRef}
-        className="flex-grow p-4 md:p-6 overflow-y-auto space-y-4"
+        className="flex-grow p-6 overflow-y-auto space-y-6 bg-gradient-to-b from-transparent to-black/5"
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "rgba(255,255,255,0.3) transparent",
+        }}
       >
         {messages.map((msg, index) => (
-          <ChatMessage
+          <div
             key={`msg-${index}-${msg.text.substring(0, 20)}`}
-            message={msg}
-          />
+            className="animate-message-appear"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <ChatMessage message={msg} />
+          </div>
         ))}
         {isLoading && messages[messages.length - 1].role === Role.USER && (
-          <div className="flex justify-start items-center space-x-2">
-            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-            <div
-              className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"
-              style={{ animationDelay: "0.2s" }}
-            ></div>
-            <div
-              className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"
-              style={{ animationDelay: "0.4s" }}
-            ></div>
+          <div className="flex justify-start items-center space-x-3 animate-fade-in">
+            <div className="w-8 h-8 flex-shrink-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+              <svg
+                className="w-4 h-4 text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/20">
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+                <div
+                  className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.1s" }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
+              </div>
+              <span className="text-sm text-white/80 font-medium">
+                AI is thinking...
+              </span>
+            </div>
           </div>
         )}
       </div>
-      <div className="p-4 bg-slate-700/50 border-t border-slate-600">
+
+      <div className="p-6 bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-sm border-t border-white/20">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSendMessage(userInput);
           }}
-          className="flex items-center space-x-2"
+          className="flex items-center space-x-4"
         >
           <VoiceButton
             onTranscript={handleVoiceTranscript}
             disabled={isLoading || !chat}
           />
-          <input
-            type="text"
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            placeholder="Type your message or use voice..."
-            className="flex-grow bg-slate-800 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            disabled={isLoading || !chat}
-          />
+          <div className="flex-grow relative">
+            <input
+              type="text"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="Type your message or use voice..."
+              className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl py-4 px-6 text-white placeholder-white/60 focus:ring-2 focus:ring-purple-400 focus:border-transparent focus:outline-none transition-all duration-200 hover:bg-white/15"
+              disabled={isLoading || !chat}
+            />
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/40">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                />
+              </svg>
+            </div>
+          </div>
           <button
             type="submit"
             disabled={isLoading || !userInput.trim() || !chat}
-            className="bg-blue-600 text-white rounded-lg p-3 disabled:bg-slate-500 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+            className="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-2xl p-4 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed hover:from-purple-600 hover:to-blue-600 transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
             aria-label="Send message"
             title="Send message"
           >
             <SendIcon />
           </button>
         </form>
+
+        <div className="flex items-center justify-center mt-4 text-xs text-white/50">
+          <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+            <span>Secure • End-to-end encrypted</span>
+          </div>
+        </div>
       </div>
+
       <BookingModal
         isOpen={isBookingModalOpen}
         onClose={() => setIsBookingModalOpen(false)}
         onSubmit={handleBookingSubmit}
       />
+
+      <style jsx>{`
+        @keyframes message-appear {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .animate-message-appear {
+          animation: message-appear 0.5s ease-out forwards;
+        }
+
+        /* Custom scrollbar */
+        .overflow-y-auto::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .overflow-y-auto::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 3px;
+        }
+
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 3px;
+        }
+
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.5);
+        }
+      `}</style>
     </>
   );
 };

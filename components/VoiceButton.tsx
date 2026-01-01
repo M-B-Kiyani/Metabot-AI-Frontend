@@ -183,13 +183,13 @@ const VoiceButton: React.FC<VoiceButtonProps> = ({
         type="button"
         onClick={isCallActive ? stopCall : startCall}
         disabled={isConnecting || disabled}
-        className={`relative flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 font-medium ${
+        className={`relative flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg ${
           isCallActive
-            ? "bg-red-600 hover:bg-red-700 animate-pulse"
+            ? "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 animate-pulse shadow-red-500/30"
             : isConnecting
-            ? "bg-yellow-600 cursor-wait"
-            : "bg-blue-600 hover:bg-blue-700"
-        } text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed`}
+            ? "bg-gradient-to-r from-yellow-500 to-orange-500 cursor-wait shadow-yellow-500/30"
+            : "bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 shadow-emerald-500/30"
+        } text-white disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none`}
         title={
           isCallActive
             ? "End voice call"
@@ -205,52 +205,76 @@ const VoiceButton: React.FC<VoiceButtonProps> = ({
             : "Start voice call"
         }
       >
+        {/* Ripple effect for active call */}
+        {isCallActive && (
+          <div className="absolute inset-0 rounded-2xl bg-white/20 animate-ping"></div>
+        )}
+
         {isConnecting ? (
-          <>
-            <svg
-              className="w-5 h-5 animate-spin"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              />
-            </svg>
-            <span>Connecting...</span>
-          </>
+          <svg className="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            />
+          </svg>
         ) : isCallActive ? (
-          <>
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-            </svg>
-            <span>End Call</span>
-          </>
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M16 8l2-2m0 0l2-2m-2 2l-2-2m2 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h8a2 2 0 012 2v4"
+            />
+          </svg>
         ) : (
-          <>
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-            </svg>
-            <span>Call AI</span>
-          </>
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+            />
+          </svg>
         )}
       </button>
+
+      {/* Status indicators */}
       {error && (
-        <div className="text-xs text-red-400 max-w-xs text-center">{error}</div>
+        <div className="bg-red-500/20 backdrop-blur-sm border border-red-500/30 rounded-xl px-3 py-2 text-xs text-red-200 max-w-xs text-center">
+          {error}
+        </div>
       )}
-      {isCallActive && (
-        <div className="text-xs text-green-400 flex items-center gap-1">
-          <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-          Call in progress
+
+      {isCallActive && !error && (
+        <div className="bg-green-500/20 backdrop-blur-sm border border-green-500/30 rounded-xl px-3 py-2 text-xs text-green-200 flex items-center gap-2">
+          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <span className="font-medium">Live Call</span>
+        </div>
+      )}
+
+      {isConnecting && (
+        <div className="bg-yellow-500/20 backdrop-blur-sm border border-yellow-500/30 rounded-xl px-3 py-2 text-xs text-yellow-200 flex items-center gap-2">
+          <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+          <span className="font-medium">Connecting...</span>
         </div>
       )}
     </div>
