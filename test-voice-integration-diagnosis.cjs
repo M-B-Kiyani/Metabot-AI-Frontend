@@ -7,7 +7,7 @@ const https = require("https");
 const http = require("http");
 
 // Configuration
-const BACKEND_URL = "http://localhost:3000";
+const BACKEND_URL = "https://metabot-ai-backend-production.up.railway.app";
 const AGENT_ID = "your_retell_agent_id_heredb";
 const RETELL_API_KEY = "your_retell_api_key_hereb4db";
 
@@ -225,8 +225,7 @@ async function test6_WebSocketEndpoint() {
   log("\n=== Test 6: WebSocket Endpoint Check ===", colors.blue);
 
   // We can't test WebSocket from Node without ws package, but we can check the URL
-  const wsUrl =
-    "wss://your-ngrok-url.ngrok-free.app/api/retell/llm";
+  const wsUrl = "wss://your-ngrok-url.ngrok-free.app/api/retell/llm";
 
   log(`  Configured WebSocket URL: ${wsUrl}`);
 

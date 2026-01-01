@@ -9,7 +9,7 @@ export interface WidgetConfig {
 }
 
 export const defaultConfig: Partial<WidgetConfig> = {
-  apiUrl: "http://localhost:3000",
+  apiUrl: "https://metabot-ai-backend-production.up.railway.app",
   brandColor: "#3b82f6",
   position: "bottom-right",
   greeting:

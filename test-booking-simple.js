@@ -2,7 +2,7 @@
  * Simple test to check if booking is working via HTTP API
  */
 
-const API_BASE = "http://localhost:3000";
+const API_BASE = "https://metabot-ai-backend-production.up.railway.app";
 
 async function testBooking() {
   console.log("🧪 Testing Booking via API...\n");

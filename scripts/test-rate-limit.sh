@@ -3,7 +3,7 @@
 # Rate Limiting Test Script for Linux/Mac
 # Tests the rate limiting configuration
 
-URL="${1:-http://localhost:3000/api/health}"
+URL="${1:-https://metabot-ai-backend-production.up.railway.app/api/health}"
 REQUESTS="${2:-55}"
 
 echo "=========================================="

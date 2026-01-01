@@ -2,7 +2,7 @@
 # Tests the rate limiting configuration
 
 param(
-    [string]$Url = "http://localhost:3000/api/health",
+    [string]$Url = "https://metabot-ai-backend-production.up.railway.app/api/health",
     [int]$Requests = 55,
     [switch]$Verbose
 )

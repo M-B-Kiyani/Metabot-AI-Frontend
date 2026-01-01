@@ -1,7 +1,4 @@
-
-
-
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://metabot-ai-backend-production.up.railway.app";
 
 async function testExecuteFunction() {
   console.log("Testing /api/retell/execute-function...");
@@ -9,21 +6,24 @@ async function testExecuteFunction() {
   const payload = {
     name: "check_availability",
     args: {
-      date: "2023-10-27"
-    }
+      date: "2023-10-27",
+    },
   };
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/retell/execute-function`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
+    const response = await fetch(
+      `${API_BASE_URL}/api/retell/execute-function`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
 
     const data = await response.json();
-    
+
     console.log(`Status: ${response.status}`);
     console.log("Response:", JSON.stringify(data, null, 2));
 

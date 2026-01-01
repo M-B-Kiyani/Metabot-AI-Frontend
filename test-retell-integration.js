@@ -4,7 +4,7 @@
  * Tests all Retell endpoints to verify integration is working
  */
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://metabot-ai-backend-production.up.railway.app";
 const API_KEY =
   "7dfeeaff41d8eb72c8e006524b69e4b57116a4dfb2314a0b068c9776c627430e";
 

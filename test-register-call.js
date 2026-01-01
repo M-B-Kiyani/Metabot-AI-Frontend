@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 async function testRegisterCall() {
   try {
     const response = await fetch(
-      "http://localhost:3000/api/retell/register-call",
+      "https://metabot-ai-backend-production.up.railway.app/api/retell/register-call",
       {
         method: "POST",
         headers: {
