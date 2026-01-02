@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BookingDetails, TimeSlot } from "../types";
 import TimeSlotPicker from "./TimeSlotPicker";
+import VoiceButton from "./VoiceButton";
 import { createBooking, ApiError } from "../services/bookingApiService";
 
 interface BookingModalProps {
@@ -105,25 +106,30 @@ const BookingModal: React.FC<BookingModalProps> = ({
                 Let's schedule a time to discuss your needs
               </p>
             </div>
-            <button
-              onClick={onClose}
-              className="w-10 h-10 rounded-2xl bg-white/10 hover:bg-white/20 transition-colors duration-200 flex items-center justify-center"
-              disabled={isSubmitting}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className="flex items-center gap-3">
+              <VoiceButton disabled={isSubmitting} />
+              <button
+                onClick={onClose}
+                className="w-10 h-10 rounded-2xl bg-white/10 hover:bg-white/20 transition-colors duration-200 flex items-center justify-center"
+                disabled={isSubmitting}
+                type="button"
+                title="Close modal"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -385,7 +391,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes shake {
           0%,
           100% {
