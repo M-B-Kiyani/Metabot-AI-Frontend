@@ -255,6 +255,16 @@
   iframe.src = "https://metabot-ai-frontend-production.up.railway.app/widget";
   iframe.style.display = "none";
 
+  // CRITICAL: Add microphone and camera permissions for iframe
+  iframe.setAttribute(
+    "allow",
+    "microphone; camera; autoplay; encrypted-media; fullscreen"
+  );
+  iframe.setAttribute(
+    "sandbox",
+    "allow-same-origin allow-scripts allow-forms allow-popups allow-presentation allow-top-navigation-by-user-activation"
+  );
+
   // Handle iframe loading
   iframe.onload = function () {
     loadingDiv.style.display = "none";

@@ -103,18 +103,47 @@ const VoiceButton: React.FC<VoiceButtonProps> = ({
       setIsConnecting(true);
       setError(null);
 
+      // Check if we're in an iframe context
+      const isInIframe = window !== window.parent;
+
       // Request microphone permission first
       console.log("Requesting microphone permission...");
       try {
+        // Check if mediaDevices is available
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          throw new Error(
+            isInIframe
+              ? "Microphone not available in iframe. Please open widget in new window."
+              : "Microphone not supported in this browser."
+          );
+        }
+
         const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true,
+          },
         });
         stream.getTracks().forEach((track) => track.stop()); // Stop the test stream
         console.log("Microphone permission granted");
-      } catch (permErr) {
-        throw new Error(
-          "Microphone permission denied. Please allow microphone access."
-        );
+      } catch (permErr: any) {
+        console.error("Microphone permission error:", permErr);
+
+        let errorMessage = "Microphone access denied.";
+
+        if (isInIframe) {
+          errorMessage =
+            "Microphone blocked in iframe. Try opening widget in new window.";
+        } else if (permErr.name === "NotAllowedError") {
+          errorMessage = "Please allow microphone access and try again.";
+        } else if (permErr.name === "NotFoundError") {
+          errorMessage = "No microphone found. Please connect a microphone.";
+        } else if (permErr.name === "NotSupportedError") {
+          errorMessage = "Microphone not supported in this browser.";
+        }
+
+        throw new Error(errorMessage);
       }
 
       const apiBaseUrl =
@@ -260,7 +289,21 @@ const VoiceButton: React.FC<VoiceButtonProps> = ({
       {/* Status indicators */}
       {error && (
         <div className="bg-red-500/20 backdrop-blur-sm border border-red-500/30 rounded-xl px-3 py-2 text-xs text-red-200 max-w-xs text-center">
-          {error}
+          <div className="mb-1">{error}</div>
+          {error.includes("iframe") && (
+            <button
+              onClick={() => {
+                window.open(
+                  "https://metabot-ai-frontend-production.up.railway.app/widget",
+                  "_blank",
+                  "width=400,height=600,scrollbars=yes,resizable=yes"
+                );
+              }}
+              className="mt-1 px-2 py-1 bg-blue-500 hover:bg-blue-600 rounded text-white text-xs transition-colors"
+            >
+              Open in New Window
+            </button>
+          )}
         </div>
       )}
 
