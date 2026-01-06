@@ -322,6 +322,27 @@ const WidgetChatbot: React.FC = () => {
         </div>
       </div>
 
+      {/* Footer - Optimized for Widget */}
+      <footer className="flex-shrink-0 text-center py-3 px-4 text-xs text-slate-400 bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-sm border-t border-white/20">
+        <div className="flex items-center justify-center gap-3 flex-wrap">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-white text-xs">
+              Powered by Metalogics
+            </span>
+            <span className="text-slate-500">|</span>
+            <span className="text-xs">&copy; 2025-26</span>
+          </div>
+          <a
+            href="https://metalogics.io/"
+            className="text-purple-300 hover:text-purple-200 transition-colors duration-200 font-medium text-xs"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            metalogics.io
+          </a>
+        </div>
+      </footer>
+
       <WidgetBookingModal
         isOpen={isBookingModalOpen}
         onClose={() => setIsBookingModalOpen(false)}
